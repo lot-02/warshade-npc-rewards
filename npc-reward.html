@@ -2,31 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Downloading NPC Voice Message...</title>
+  <title>Claim Your NPC Voice Reward</title>
   <style>
     body {
       background: #000;
       color: #0ff;
       font-family: 'Orbitron', sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       text-align: center;
-      flex-direction: column;
     }
+
     h2 {
-      margin-bottom: 10px;
+      margin-bottom: 1rem;
     }
-    .highlight {
-      color: #ff00ff;
-      font-weight: bold;
+
+    /* Glowing Button */
+    .claim-btn {
+      background: linear-gradient(45deg, #ffcc00, #ff9900);
+      border: none;
+      color: #fff;
+      font-size: 1.4rem;
+      padding: 15px 40px;
+      border-radius: 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px #ff9900, 0 0 30px #ffcc00, 0 0 45px #ffaa00;
+      animation: glow 1.5s infinite alternate;
+      margin-top: 1rem;
+    }
+
+    .claim-btn:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 10px #ff9900, 0 0 20px #ffcc00, 0 0 30px #ffaa00;
+      }
+      to {
+        box-shadow: 0 0 20px #ffaa00, 0 0 40px #ffcc00, 0 0 60px #ff9900;
+      }
+    }
+
+    #rewardLabel {
+      font-size: 1.2rem;
+      color: #ff0;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-  <h2>🎧 Unlocking a secret voice message...</h2>
-  <p id="msg">Preparing your reward...</p>
+  <h2>🎁 Claim Your Secret NPC Voice Message!</h2>
+  <p>Press the glowing button to reveal your reward.</p>
+  <button class="claim-btn" onclick="playAndDownload()">Claim Reward</button>
+  <p id="rewardLabel"></p>
 
   <script>
     const messages = [
@@ -54,7 +87,7 @@
       { file: "npc-message/secret1.mp3", type: "Hushed Rumors" },
       { file: "npc-message/secret2.mp3", type: "Hidden Truths" },
       { file: "npc-message/secret3.mp3", type: "Shadows Speak" },
-      { file: "npc-message/tips1.mp3", type: "Adventurer’s Wisdomk" },
+      { file: "npc-message/tips1.mp3", type: "Adventurer’s Wisdom" },
       { file: "npc-message/tips2.mp3", type: "Battlefield Insights" },
       { file: "npc-message/tips3.mp3", type: "Traveler’s Tricks" },
       { file: "npc-message/warning1.mp3", type: "Ominous Whispers" },
@@ -62,17 +95,27 @@
       { file: "npc-message/warning3.mp3", type: "Foreboding Signs" }
     ];
 
-    const chosen = messages[Math.floor(Math.random() * messages.length)];
-    document.getElementById("msg").innerHTML = `You found a <span class="highlight">${chosen.type}</span>!`;
+    function playAndDownload() {
+      // Pick a random reward
+      const reward = messages[Math.floor(Math.random() * messages.length)];
 
-    setTimeout(() => {
-      const a = document.createElement("a");
-      a.href = chosen.file;
-      a.download = chosen.file.split("/").pop();
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }, 1500); // wait 1.5 seconds before download
+      // Show the reward category before sound plays
+      document.getElementById("rewardLabel").textContent = `You unlocked: ${reward.type}`;
+
+      // Play chest opening sound
+      const chestSound = new Audio("sounds/chest_open.mp3"); // Change path if needed
+      chestSound.play();
+
+      // After chest sound finishes, download the reward
+      chestSound.onended = () => {
+        const a = document.createElement("a");
+        a.href = reward.file;
+        a.download = reward.file.split("/").pop();
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      };
+    }
   </script>
 </body>
 </html>
