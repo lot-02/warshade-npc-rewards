@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Downloading NPC Voice Message...</title>
+  <style>
+    body {
+      background: #000;
+      color: #0ff;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      flex-direction: column;
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    .highlight {
+      color: #ff00ff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎧 Unlocking a secret voice message...</h2>
+  <p id="msg">Preparing your reward...</p>
+
+  <script>
+    const messages = [
+      { file: "npc-message/farewell1.mp3", type: "Final Bows" },
+      { file: "npc-message/farewell2.mp3", type: "Until Next Time" },
+      { file: "npc-message/farewell3.mp3", type: "Parting Words" },
+      { file: "npc-message/flirt1.mp3", type: "Blush Triggers" },
+      { file: "npc-message/flirt2.mp3", type: "Heartstrings" },
+      { file: "npc-message/flirt3.mp3", type: "Sweet Nothings" },
+      { file: "npc-message/greeting1.mp3", type: "Warm Welcomes" },
+      { file: "npc-message/greeting2.mp3", type: "First Impressions" },
+      { file: "npc-message/greeting3.mp3", type: "Friendly Hails" },
+      { file: "npc-message/joke1.mp3", type: "Campfire Chuckles" },
+      { file: "npc-message/joke2.mp3", type: "Alehouse Laughs" },
+      { file: "npc-message/joke3.mp3", type: "Tavern Humor" },
+      { file: "npc-message/lore1.mp3", type: "Tales of the Old World" },
+      { file: "npc-message/lore2.mp3", type: "Legends Remembered" },
+      { file: "npc-message/lore3.mp3", type: "Chronicles of the Realm" },
+      { file: "npc-message/mystery1.mp3", type: "Enigmas of the Realm" },
+      { file: "npc-message/mystery2.mp3", type: "Unsolved Whispers" },
+      { file: "npc-message/mystery3.mp3", type: "Veiled Puzzles" },
+      { file: "npc-message/riddle1.mp3", type: "Mind-Benders" },
+      { file: "npc-message/riddle2.mp3", type: "Brain Twisters" },
+      { file: "npc-message/riddle3.mp3", type: "Cryptic Clues" },
+      { file: "npc-message/secret1.mp3", type: "Hushed Rumors" },
+      { file: "npc-message/secret2.mp3", type: "Hidden Truths" },
+      { file: "npc-message/secret3.mp3", type: "Shadows Speak" },
+      { file: "npc-message/tips1.mp3", type: "Adventurer’s Wisdomk" },
+      { file: "npc-message/tips2.mp3", type: "Battlefield Insights" },
+      { file: "npc-message/tips3.mp3", type: "Traveler’s Tricks" },
+      { file: "npc-message/warning1.mp3", type: "Ominous Whispers" },
+      { file: "npc-message/warning2.mp3", type: "Danger Calls" },
+      { file: "npc-message/warning3.mp3", type: "Foreboding Signs" }
+    ];
+
+    const chosen = messages[Math.floor(Math.random() * messages.length)];
+    document.getElementById("msg").innerHTML = `You found a <span class="highlight">${chosen.type}</span>!`;
+
+    setTimeout(() => {
+      const a = document.createElement("a");
+      a.href = chosen.file;
+      a.download = chosen.file.split("/").pop();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }, 1500); // wait 1.5 seconds before download
+  </script>
+</body>
+</html>
